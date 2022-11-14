@@ -1,0 +1,229 @@
+@import "./variables";
+@import "./mixins";
+
+// reset CSS
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+a:hover {
+    color: $black !important;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+// -----------------------------------------
+
+.text-black {
+    color: $black;
+}
+
+.text-grey {
+    color: $grey;
+}
+
+// -----------------------------------------
+header {
+    height: 70px;
+    padding: .75rem;
+    border-bottom: 1px solid $black;
+    
+    .back {
+        font-weight: 500;
+        font-size: clamp(18px, 1vw, 20px);
+    }
+}
+
+main {
+    overflow-x: hidden;
+}
+
+section#article-wrapper {
+    .article-content {
+        width: 100%;
+
+        @include normal-screen {
+            width: calc(100% - 333px);
+        }
+
+        .article-header {
+            padding-inline-end: 3rem;
+
+            @include normal-screen {
+                padding-inline-end: unset;
+            }
+        }
+
+        .abstract {
+            padding-inline-end: 2rem;
+        }
+    }
+
+    .article-information {
+        height: 100%;
+
+        @include normal-screen {
+            background-color: $bg;
+            width: 333px;
+        }
+
+        .information-panel {
+            width: clamp(40px, 10vw, 50px);
+            position: absolute;
+            right: 8px;
+
+            @include normal-screen {
+                width: 100%;
+                position: relative;
+                right: 0;
+            }
+
+            .panel-item {
+                color: $grey;
+                cursor: pointer;
+                padding: clamp(.5rem, 1.6vw, 1rem);
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    height: 2px;
+                }
+
+                &:hover {
+                    color: $black;
+                }
+
+                @include normal-screen {
+                    &.not-active {
+                        &::after {
+                            width: 0%;
+                            right: 0;
+                            background-color: transparent;
+                            animation: borderBottomNotActive .5s;
+                        }
+                    }
+
+                    &.active {
+                        color: $black;
+                    }
+
+                    &.active {
+                        &::after {
+                            left: 0;
+                            width: 100%;
+                            background-color: $black;
+                            animation: borderBottom .5s;
+                        }
+                    }
+                }
+
+                svg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                h6 {
+                    font-size: clamp(14px, .75vw, 16px);
+                }
+            }
+        }
+
+        #article-information-content {
+            width: 100%;
+            height: 100%;
+            max-height: 100vh;
+            overflow: auto;
+            position: absolute;
+            top: 4.5rem;
+            right: -100%;
+            z-index: 5;
+            background-color: $white;
+            transition: all .5s;
+
+            @include normal-screen {
+                position: initial;
+                right: unset;
+                z-index: unset;
+                background-color: transparent;
+            }
+
+            &.move {
+                right: 0;
+            }
+
+            .title {
+                color: $header;
+            }
+        }
+
+        .hr {
+            height: 1.5px;
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes borderBottom {
+    0% {
+        width: 0%;
+        background-color: transparent;
+    }
+
+    100% {
+        width: 100%;
+        background-color: $black;
+    }
+}
+
+@keyframes borderBottomNotActive {
+    0% {
+        width: 100%;
+        background-color: $black;
+    }
+
+    100% {
+        width: 0%;
+        background-color: transparent;
+    }
+}
